@@ -1,4 +1,4 @@
-# Bachelor Thesis – Reverse Turing Game Classifier
+# Reverse Turing Game Classifier – Bachelor Thesis
 This repository contains the code, trained models, and experiment configurations used for my bachelor thesis. It provides all scripts and data required to recreate the experimental results and plots described in the thesis.
 
 ## Installation
