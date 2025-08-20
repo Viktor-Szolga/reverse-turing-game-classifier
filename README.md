@@ -1,7 +1,7 @@
 # Bachelor Thesis – Reverse Turing Game Classifier
 This repository contains the code, trained models, and experiment configurations used for my bachelor thesis. It provides all scripts and data required to recreate the experimental results and plots described in the thesis.
 
-## 📦 Installation
+## Installation
 The project uses [Poetry](https://python-poetry.org/) for dependency management.
 
 1. Clone this repository:
