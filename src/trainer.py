@@ -98,22 +98,19 @@ class Trainer:
         return accuracy.compute(), validation_loss/len(self.val_loader)
     
     def split_by_user_id(self):
-        # Load user_id list (1 per message)
         with open(os.path.join("data", "user_ids.pkl"), "rb") as f:
             self.user_ids = pickle.load(f)
 
         numpy_user_ids = np.array(self.user_ids, dtype=str)
 
-        # Create masks for AI and human messages
         ai_mask = numpy_user_ids == "0"
         human_mask = numpy_user_ids != "0"
 
         ai_indices = np.where(ai_mask)[0]
         human_indices = np.where(human_mask)[0]
 
-        human_user_ids = numpy_user_ids[human_indices]  # Group labels for split
+        human_user_ids = numpy_user_ids[human_indices]
 
-        # GroupShuffleSplit to ensure users go only to one split
         gss = GroupShuffleSplit(n_splits=1, test_size=self.config.data.test_size, random_state=42)
         human_train_subidx, human_val_subidx = next(gss.split(human_indices, groups=human_user_ids))
 
@@ -123,7 +120,6 @@ class Trainer:
         self.human_train_idx = human_train_idx
         self.human_val_idx = human_val_idx
 
-        # Compute AI counts to match original frequency in each split
         total_len = len(numpy_user_ids)
         ai_ratio = len(ai_indices) / total_len
 
@@ -133,15 +129,13 @@ class Trainer:
         n_ai_train = int(round(expected_train_len * ai_ratio))
         n_ai_val = int(round(expected_val_len * ai_ratio))
 
-        # Cap at available AI messages to avoid overflow
         n_ai_train = min(n_ai_train, len(ai_indices))
         n_ai_val = min(n_ai_val, len(ai_indices) - n_ai_train)
 
-        # Shuffle AI indices before splitting
         ai_indices_shuffled = np.random.RandomState(seed=42).permutation(ai_indices)
         ai_train_idx = ai_indices_shuffled[:n_ai_train]
         ai_val_idx = ai_indices_shuffled[n_ai_train:n_ai_train + n_ai_val]
-        # Combine human and AI indices for final splits
+        
         self.train_idx = np.sort(np.concatenate([human_train_idx, ai_train_idx]))
         self.val_idx = np.sort(np.concatenate([human_val_idx, ai_val_idx]))
 
