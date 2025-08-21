@@ -1,61 +1,21 @@
-"""
-from src.utils import plot_curves, plot_curves_on_ax
-import pickle
-import os
-import matplotlib.pyplot as plt
-
-
-model_1_name = "currently_deployed_split_by_user"
-model_2_name = "current_no_regularization_by_user"
-
-with open(os.path.join("training_information", f"{model_1_name}.pkl"), "rb") as f:
-    model1_dict = pickle.load(f)
-
-with open(os.path.join("training_information", f"{model_2_name}.pkl"), "rb") as f:
-    model2_dict = pickle.load(f)
-
-m1_train_loss = model1_dict["train_loss"]
-m1_train_acc = model1_dict["train_accuracy"]
-m1_validation_loss = model1_dict["validation_loss"]
-m1_validation_acc = model1_dict["validation_accuracy"]
-
-
-m2_train_loss = model2_dict["train_loss"]
-m2_train_acc = model2_dict["train_accuracy"]
-m2_validation_loss = model2_dict["validation_loss"]
-m2_validation_acc = model2_dict["validation_accuracy"]
-
-#plot_curves(m1_train_loss, m2_train_loss, metric="Loss", legend=["Empty", "Specified"])
-
-fig, axs = plt.subplots(2, 2, figsize=(6, 6))
-plot_curves_on_ax(axs[0][0], m1_train_loss, m2_train_loss, metric="Loss", title="Train Loss", legend=["Reg", "Model 2"])
-plot_curves_on_ax(axs[0][1], m1_train_acc, m2_train_acc, metric="Accuracy", title="Train Accuracy", legend=["Reg", "No reg"])
-plot_curves_on_ax(axs[1][0], m1_validation_loss, m2_validation_loss, metric="Loss", title="Validation Loss", legend=["Reg", "No reg"])
-plot_curves_on_ax(axs[1][1], m1_validation_acc, m2_validation_acc, metric="Accuracy", title="Validation Accuracy", legend=["Reg", "No reg"])
-plt.tight_layout()
-plt.show()
-"""
-
 from src.utils import plot_curves_on_ax
 import pickle
 import os
 import matplotlib.pyplot as plt
 
-# Specify the list of run names (must match .pkl filenames)
-
+# Specify the list of run names (include leading 0 for 0-9)
 run_names = [
     "run12",
     "run04",
     "run20"
 ]
 
+# SPecify legend names
 legends = [
     "Model A",
     "Model B",
     "Model C",
 ]
-
-
 
 # Initialize lists to collect metrics
 train_losses, train_accs = [], []

@@ -31,6 +31,7 @@ class Classifier:
                         )
         self.embedding_model = "intfloat/multilingual-e5-large-instruct"
 
+        # Initializes and loads the model
         self.classifier = MessageClassifier(1024, [48, 24], 2, dropout=0.75)
         self.classifier.to(self.device)
         self.classifier.load_state_dict(torch.load(path_to_state_dict, weights_only=True))
