@@ -10,7 +10,7 @@ run_names = [
     "run20"
 ]
 
-# SPecify legend names
+# Specify legend names
 legends = [
     "Model A",
     "Model B",
