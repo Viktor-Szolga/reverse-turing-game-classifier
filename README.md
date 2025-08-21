@@ -12,7 +12,7 @@ The project uses [Poetry](https://python-poetry.org/) for dependency management.
 
 2. Create the environment with Poetry:
    ```bash
-   poetry install
+   pip install .
    ```
 
    Alternatively, you can install from the frozen requirements file:
